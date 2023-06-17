@@ -59,9 +59,9 @@ class Node(Movable):
     def draw_output_rects(self, win):
         for i, rect in enumerate(self.output_rects()):
             if i == self.selected:
-                pygame.draw.rect(win, COLOURS["green"], rect)
+                pygame.draw.rect(win, COLOURS["green"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
             else:
-                pygame.draw.rect(win, COLOURS["red"], rect)
+                pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
         
         # draw lines from input rects to output rects
         for i, output in enumerate(self.outputs):
@@ -73,14 +73,14 @@ class Node(Movable):
     
     def draw_input_rects(self, win):
         for rect in self.input_rects():
-            pygame.draw.rect(win, COLOURS["red"], rect)
+            pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_left_radius=2, border_top_left_radius=2)
     
     def draw(self, win):
         if self.value:
             colour = COLOURS["cyan"]
         else:
             colour = COLOURS["black"]
-        pygame.draw.rect(win, colour, self.rect)
+        pygame.draw.rect(win, colour, self.rect, border_radius=3)
         text = NODE_FONT.render(self.name, 1, COLOURS["white"])
         win.blit(text, (self.x + self.width / 2 - text.get_width() / 2, self.y + self.height / 2 - text.get_height() / 2))
         self.draw_output_rects(win)
