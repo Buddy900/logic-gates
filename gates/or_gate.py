@@ -7,10 +7,9 @@ class Or(Node):
         self.outputs = [[]]
         self.inputs = [[], []]
         self.name = "Or"
-    
-    def value(self, r):
-        if r >= 100:
-            return False
+
+    @property
+    def value(self):
         for inps in self.inputs:
             for inp in inps:
                 if inp[0].value(r + 1):
