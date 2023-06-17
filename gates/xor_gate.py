@@ -7,10 +7,9 @@ class Xor(Node):
         self.outputs = [[]]
         self.inputs = [[], []]
         self.name = "Xor"
-    
-    def value(self, r):
-        if r >= 100:
-            return False
+
+    @property
+    def value(self):
         inp_1 = False
         inp_2 = False
         for inp in self.inputs[0]:
