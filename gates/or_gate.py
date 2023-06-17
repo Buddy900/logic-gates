@@ -12,6 +12,6 @@ class Or(Node):
     def value(self):
         for inps in self.inputs:
             for inp in inps:
-                if inp[0].value(r + 1):
+                if inp[0].value:
                     return True
         return False
