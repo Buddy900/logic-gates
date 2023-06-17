@@ -76,7 +76,7 @@ class Node(Movable):
             pygame.draw.rect(win, COLOURS["red"], rect)
     
     def draw(self, win):
-        if self.value(0):
+        if self.value:
             colour = COLOURS["cyan"]
         else:
             colour = COLOURS["black"]
