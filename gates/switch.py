@@ -11,6 +11,7 @@ class Switch(Node):
     
     def click(self):
         self.on = not self.on
-    
-    def value(self, r):
+
+    @property
+    def value(self):
         return self.on

@@ -7,10 +7,9 @@ class Bulb(Node):
         self.outputs = []
         self.inputs = [[]]
         self.name = "Bulb"
-    
+
+    @property
     def value(self, r):
-        if r >= 100:
-            return False
         for inp in self.inputs[0]:
-            if inp[0].value(r + 1):
+            if inp[0].value:
                 return True

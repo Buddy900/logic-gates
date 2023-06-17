@@ -7,6 +7,7 @@ class LowConstant(Node):
         self.outputs = [[]]
         self.inputs = []
         self.name = "False"
-    
-    def value(self, r):
+
+    @property
+    def value(self):
         return False

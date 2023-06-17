@@ -8,16 +8,15 @@ class And(Node):
         self.outputs = [[]]
         self.inputs = [[], []]
         self.name = "And"
-    
-    def value(self, r):
-        if r >= MAX_RECURSION_DEPTH:
-            return False
+
+    @property
+    def value(self):
         inp_1 = False
         inp_2 = False
         for inp in self.inputs[0]:
-            inp_1 = inp_1 or inp[0].value(r + 1)
+            inp_1 = inp_1 or inp[0].value
         
         for inp in self.inputs[1]:
-            inp_2 = inp_2 or inp[0].value(r + 1)
+            inp_2 = inp_2 or inp[0].value
         
         return inp_1 and inp_2
