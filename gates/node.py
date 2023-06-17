@@ -11,8 +11,9 @@ class Node(Movable):
         self.inputs = [[], []]
         self.selected = None
         self.name = "#"
-    
-    def value(self, r):
+
+    @property
+    def value(self):
         return False
     
     def attach(self, other_node, output_index, input_index):
