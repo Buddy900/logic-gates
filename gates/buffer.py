@@ -8,10 +8,9 @@ class Buffer(Node):
         self.outputs = [[]]
         self.inputs = [[]]
         self.name = "Buffer"
-    
-    def value(self, r):
-        if r >= MAX_RECURSION_DEPTH:
-            return False
+
+    @property
+    def value(self):
         for inp in self.inputs[0]:
             if inp[0].value(r + 1):
                 return True
