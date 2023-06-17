@@ -7,10 +7,9 @@ class Not(Node):
         self.outputs = [[]]
         self.inputs = [[]]
         self.name = "Not"
-    
-    def value(self, r):
-        if r >= 100:
-            return False
+
+    @property
+    def value(self):
         for inp in self.inputs[0]:
             if inp[0].value(r + 1):
                 return False
