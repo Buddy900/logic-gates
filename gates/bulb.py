@@ -11,5 +11,5 @@ class Bulb(Node):
     @property
     def value(self, r):
         for inp in self.inputs[0]:
-            if inp[0].value(r + 1):
+            if inp[0].value:
                 return True
