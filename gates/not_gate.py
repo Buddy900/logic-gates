@@ -11,6 +11,6 @@ class Not(Node):
     @property
     def value(self):
         for inp in self.inputs[0]:
-            if inp[0].value(r + 1):
+            if inp[0].value:
                 return False
         return True
