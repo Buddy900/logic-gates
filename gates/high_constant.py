@@ -7,6 +7,7 @@ class HighConstant(Node):
         self.outputs = [[]]
         self.inputs = []
         self.name = "True"
-    
-    def value(self, r):
+
+    @property
+    def value(self):
         return True
