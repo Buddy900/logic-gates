@@ -46,6 +46,10 @@ class Screen:
             self.nodes.append(Node("switch", 50, 50, 50, 50))
         elif event.key == pygame.K_RSHIFT:
             self.nodes.append(Node("node", 50, 50, 50, 50))
+        elif event.key == pygame.K_1:
+            self.nodes.append(Node("half_adder", 50, 50, 50, 50))
+        elif event.key == pygame.K_2:
+            self.nodes.append(Node("full_adder", 50, 50, 50, 50))
     
     def handle_key_up(self, event):
         pass
