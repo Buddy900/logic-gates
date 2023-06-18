@@ -1,5 +1,5 @@
 from consts import *
-from gates import *
+from gates import Node
 
 import pygame
 
@@ -25,27 +25,27 @@ class Screen:
     
     def handle_key_down(self, event):
         if event.key == pygame.K_n:
-            self.nodes.append(Not(50, 50, 50, 50))
+            self.nodes.append(Node("not", 50, 50, 50, 50))
         elif event.key == pygame.K_a:
             self.nodes.append(Node("and", 50, 50, 50, 50))
         elif event.key == pygame.K_o:
-            self.nodes.append(Or(50, 50, 50, 50))
+            self.nodes.append(Node("or", 50, 50, 50, 50))
         elif event.key == pygame.K_h:
-            self.nodes.append(HighConstant(50, 50, 50, 50))
+            self.nodes.append(Node("high_constant", 50, 50, 50, 50))
         elif event.key == pygame.K_l:
-            self.nodes.append(LowConstant(50, 50, 50, 50))
+            self.nodes.append(Node("low_constant", 50, 50, 50, 50))
         elif event.key == pygame.K_b:
-            self.nodes.append(Bulb(50, 50, 50, 50))
+            self.nodes.append(Node("bulb", 50, 50, 50, 50))
         elif event.key == pygame.K_d:
-            self.nodes.append(Nand(50, 50, 50, 50))
+            self.nodes.append(Node("nand", 50, 50, 50, 50))
         elif event.key == pygame.K_u:
-            self.nodes.append(Buffer(50, 50, 50, 50))
+            self.nodes.append(Node("buffer", 50, 50, 50, 50))
         elif event.key == pygame.K_x:
-            self.nodes.append(Xor(50, 50, 50, 50))
+            self.nodes.append(Node("xor", 50, 50, 50, 50))
         elif event.key == pygame.K_s:
-            self.nodes.append(Switch(50, 50, 50, 50))
+            self.nodes.append(Node("switch", 50, 50, 50, 50))
         elif event.key == pygame.K_RSHIFT:
-            self.nodes.append(Node(50, 50, 50, 50))
+            self.nodes.append(Node("node", 50, 50, 50, 50))
     
     def handle_key_up(self, event):
         pass
