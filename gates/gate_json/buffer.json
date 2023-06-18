@@ -1,0 +1,13 @@
+{
+    "name": "buffer",
+    "num_inputs": 1,
+    "num_outputs": 1,
+    "structure": {
+        "gates": {
+            "2": ["or", "0"]
+        },
+        "outputs": {
+            "0": "2"
+        }
+    }
+}

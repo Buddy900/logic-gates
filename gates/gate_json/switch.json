@@ -1,0 +1,13 @@
+{
+    "name": "switch",
+    "num_inputs": 0,
+    "num_outputs": 1,
+    "structure": {
+        "gates": {
+            "0": "on_click"
+        },
+        "outputs": {
+            "0": "0"
+        }
+    }
+}

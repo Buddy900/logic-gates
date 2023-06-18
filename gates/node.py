@@ -2,19 +2,15 @@ from consts import *
 from .movable import Movable
 
 import pygame
+import json
 
 
 class Node(Movable):
-    def __init__(self, x, y, width, height):
+    def __init__(self, name, x, y, width, height):
         super().__init__(x, y, width, height)
-        self.outputs = [[], []]
-        self.inputs = [[], []]
         self.selected = None
-        self.name = "#"
-
-    @property
-    def value(self):
-        return False
+        self.file_name = f"{name}.json"
+        self.load_json()
     
     def attach(self, other_node, output_index, input_index):
         other_node.inputs[input_index].append((self, output_index))
@@ -35,6 +31,10 @@ class Node(Movable):
     
     def select(self, index):
         self.selected = index
+    
+    def click(self):
+        self.on = not self.on
+        self.output_values[0] = self.on
     
     def output_rects(self):
         rects = []
@@ -60,6 +60,8 @@ class Node(Movable):
         for i, rect in enumerate(self.output_rects()):
             if i == self.selected:
                 pygame.draw.rect(win, COLOURS["green"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
+            elif self.output_values[i] and not self.name in ["bulb", "switch"]:
+                pygame.draw.rect(win, COLOURS["cyan"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
             else:
                 pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
         
@@ -76,7 +78,7 @@ class Node(Movable):
             pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_left_radius=2, border_top_left_radius=2)
     
     def draw(self, win):
-        if self.value:
+        if (self.name == "bulb" and self.output_values[-1]) or (self.name == "switch" and self.output_values[0]):
             colour = COLOURS["cyan"]
         else:
             colour = COLOURS["black"]
@@ -99,4 +101,61 @@ class Node(Movable):
             if rect.collidepoint(mouse_x, mouse_y):
                 return i
         return -1
-            
+    
+    def load_json(self):
+        with open(f"gates\\gate_json\\{self.file_name}", "r") as file:
+            data = json.load(file)
+            self.name = data["name"]
+            self.num_inputs = data["num_inputs"]
+            self.inputs = [[] for _ in range(self.num_inputs)]
+            self.num_outputs = data["num_outputs"]
+            self.outputs = [[] for _ in range(self.num_outputs)]
+            self.structure = data["structure"]
+            self.output_values = {i: False for i in range(self.num_outputs)}
+            self.clickable = False
+            self.on = False
+
+    def gate(self, name, *args):
+        if name == "and":
+            return all(args)
+        elif name == "or":
+            return any(args)
+        elif name == "not":
+            return not args[0]
+        elif name == "xor":
+            return args[0] != args[1]
+        elif name == "nand":
+            return not all(args)
+        elif name == "nor":
+            return not any(args)
+        elif name == "xnor":
+            return args[0] == args[1]
+        elif name == "false":
+            return False
+        elif name == "true":
+            return True
+    
+    def get_input_value(self, input_index):
+        if len(self.inputs[input_index]) == 0:
+            return False
+        return self.inputs[input_index][0][0].output_values[self.inputs[input_index][0][1]]
+
+    def updated_value(self):
+        gates = {str(i): self.get_input_value(i) for i in range(self.num_inputs)}
+        for gate, data in self.structure["gates"].items():
+            if data == "on_click":
+                self.clickable = True
+                gates[gate] = self.on
+            elif len(data) == 1:
+                gates[gate] = self.gate(data[0])
+            elif len(data) == 2:
+                gates[gate] = self.gate(data[0], gates[data[1]])
+            else:
+                gates[gate] = self.gate(data[0], *[gates[data[i]] for i in range(1, len(data))])
+        
+        for output, data in self.structure["outputs"].items():
+            self.output_values[int(output)] = gates[data]
+    
+    def update(self):
+        super().update()
+        self.updated_value()
