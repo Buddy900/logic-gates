@@ -71,7 +71,7 @@ class Node(Movable):
                 if other is None:
                     continue
                 other_node, other_index = other
-                pygame.draw.line(win, COLOURS["black"], self.output_rects()[i].center, other_node.input_rects()[other_index].center)
+                self.draw_wire(win, self.output_rects()[i].center, other_node.input_rects()[other_index].center)
     
     def draw_input_rects(self, win):
         for rect in self.input_rects():
@@ -87,6 +87,12 @@ class Node(Movable):
         win.blit(text, (self.x + self.width / 2 - text.get_width() / 2, self.y + self.height / 2 - text.get_height() / 2))
         self.draw_output_rects(win)
         self.draw_input_rects(win)
+    
+    def draw_wire(self, win, point_1, point_2):
+        diff_x = point_2[0] - point_1[0]
+        mid_1 = (point_1[0] + diff_x / 2, point_1[1])
+        mid_2 = (point_1[0] + diff_x / 2, point_2[1])
+        pygame.draw.lines(win, COLOURS["black"], False, [point_1, mid_1, mid_2, point_2])
     
     def output_node_selected(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -136,9 +142,10 @@ class Node(Movable):
             return True
     
     def get_input_value(self, input_index):
-        if len(self.inputs[input_index]) == 0:
-            return False
-        return self.inputs[input_index][0][0].output_values[self.inputs[input_index][0][1]]
+        for node, index in self.inputs[input_index]:
+            if node.output_values[index]:
+                return True
+        return False
 
     def updated_value(self):
         gates = {str(i): self.get_input_value(i) for i in range(self.num_inputs)}
