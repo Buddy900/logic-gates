@@ -27,7 +27,7 @@ class Screen:
         if event.key == pygame.K_n:
             self.nodes.append(Not(50, 50, 50, 50))
         elif event.key == pygame.K_a:
-            self.nodes.append(And(50, 50, 50, 50))
+            self.nodes.append(Node("and", 50, 50, 50, 50))
         elif event.key == pygame.K_o:
             self.nodes.append(Or(50, 50, 50, 50))
         elif event.key == pygame.K_h:
@@ -44,6 +44,8 @@ class Screen:
             self.nodes.append(Xor(50, 50, 50, 50))
         elif event.key == pygame.K_s:
             self.nodes.append(Switch(50, 50, 50, 50))
+        elif event.key == pygame.K_RSHIFT:
+            self.nodes.append(Node(50, 50, 50, 50))
     
     def handle_key_up(self, event):
         pass
@@ -78,6 +80,11 @@ class Screen:
                 if i.clicked():
                     i.remove()
                     self.nodes.remove(i)
+                    break
+        elif event.button == 2:
+            for i in self.nodes:
+                if i.clicked():
+                    i.updated_value()
                     break
     
     def handle_mouse_up(self, event):

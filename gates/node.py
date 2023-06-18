@@ -2,15 +2,15 @@ from consts import *
 from .movable import Movable
 
 import pygame
+import json
 
 
 class Node(Movable):
-    def __init__(self, x, y, width, height):
+    def __init__(self, name, x, y, width, height):
         super().__init__(x, y, width, height)
-        self.outputs = [[], []]
-        self.inputs = [[], []]
         self.selected = None
-        self.name = "#"
+        self.file_name = f"{name}.json"
+        self.load_json()
 
     @property
     def value(self):
@@ -60,6 +60,8 @@ class Node(Movable):
         for i, rect in enumerate(self.output_rects()):
             if i == self.selected:
                 pygame.draw.rect(win, COLOURS["green"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
+            elif self.value and not self.name in ["Bulb", "Switch"]:
+                pygame.draw.rect(win, COLOURS["cyan"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
             else:
                 pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
         
@@ -76,7 +78,7 @@ class Node(Movable):
             pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_left_radius=2, border_top_left_radius=2)
     
     def draw(self, win):
-        if self.value:
+        if self.value and self.name in ["bulb", "switch"]:
             colour = COLOURS["cyan"]
         else:
             colour = COLOURS["black"]
@@ -99,4 +101,63 @@ class Node(Movable):
             if rect.collidepoint(mouse_x, mouse_y):
                 return i
         return -1
-            
+    
+    
+    
+    def load_json(self):
+        with open(f"gates\\gate_json\\{self.file_name}", "r") as file:
+            data = json.load(file)
+            self.name = data["name"]
+            self.num_inputs = data["num_inputs"]
+            self.inputs = [[] for _ in range(self.num_inputs)]
+            self.num_outputs = data["num_outputs"]
+            self.outputs = [[] for _ in range(self.num_outputs)]
+            self.structure = data["structure"]
+            self.output_values = {i: False for i in range(self.num_outputs)}
+            self.clickable == False
+
+    def gate(self, name, *args):
+        if name == "and":
+            print(args)
+            return all(args)
+        elif name == "or":
+            return any(args)
+        elif name == "not":
+            return not args[0]
+        elif name == "xor":
+            return args[0] != args[1]
+        elif name == "nand":
+            return not all(args)
+        elif name == "nor":
+            return not any(args)
+        elif name == "xnor":
+            return args[0] == args[1]
+        elif name == "false":
+            return False
+        elif name == "true":
+            return True
+    
+    def get_input_value(self, input_index):
+        if len(self.inputs[input_index]) == 0:
+            return False
+        return self.inputs[input_index][0][0].value
+
+    def updated_value(self):
+        gates = {str(i): self.get_input_value(i) for i in range(self.num_inputs)}
+        for gate, data in self.structure["gates"].items():
+            if data == "on_click":
+                self.clickable = True
+                gates[gate] = False
+            if len(data) == 1:
+                gates[gate] = self.gate(data[0])
+            elif len(data) == 2:
+                gates[gate] = self.gate(data[0], gates[data[1]])
+            else:
+                gates[gate] = self.gate(data[0], *[gates[data[i]] for i in range(1, len(data))])
+        
+        print(gates)
+        
+        for output, data in self.structure["outputs"].items():
+            self.output_values[int(output)] = gates[data]
+        
+        print(self.output_values)

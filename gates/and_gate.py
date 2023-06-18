@@ -5,9 +5,8 @@ from consts import MAX_RECURSION_DEPTH
 class And(Node):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height)
-        self.outputs = [[]]
-        self.inputs = [[], []]
-        self.name = "And"
+        self.file_name = "and.json"
+        self.load_json()
 
     @property
     def value(self):

@@ -1,0 +1,13 @@
+{
+    "name": "true",
+    "num_inputs": 0,
+    "num_outputs": 1,
+    "structure": {
+        "gates": {
+            "2": ["true"]
+        },
+        "outputs": {
+            "0": "2"
+        }
+    }
+}

@@ -9,7 +9,7 @@ class Bulb(Node):
         self.name = "Bulb"
 
     @property
-    def value(self, r):
+    def value(self):
         for inp in self.inputs[0]:
             if inp[0].value:
                 return True

@@ -1,0 +1,11 @@
+{
+    "name": "bulb",
+    "num_inputs": 1,
+    "num_outputs": 0,
+    "structure": {
+        "gates": {},
+        "outputs": {
+            "-1": "0"
+        }
+    }
+}
