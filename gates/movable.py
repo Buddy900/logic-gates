@@ -1,5 +1,7 @@
 import pygame
 
+from consts import *
+
 
 class Movable:
     def __init__(self, x, y, width, height):
@@ -10,6 +12,10 @@ class Movable:
         self.offset = (0, 0)
         self.moving = False
         self.start_pos = None
+        self.width = max(
+            NODE_FONT.render(self.name, 1, COLOURS["white"]).get_width() + 40,
+            self.width,
+        )
     
     @property
     def rect(self):

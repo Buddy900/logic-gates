@@ -7,10 +7,10 @@ import json
 
 class Node(Movable):
     def __init__(self, name, x, y, width, height):
-        super().__init__(x, y, width, height)
-        self.selected = None
         self.file_name = f"{name}.json"
         self.load_json()
+        super().__init__(x, y, width, height)
+        self.selected = None
     
     def attach(self, other_node, output_index, input_index):
         other_node.inputs[input_index].append((self, output_index))
@@ -57,6 +57,17 @@ class Node(Movable):
         return rects
     
     def draw_output_rects(self, win):
+        for i, output in enumerate(self.outputs):
+            for this_index, (other) in enumerate(output):
+                if other is None:
+                    continue
+                other_node, other_index = other
+                if self.output_values[i]:
+                    colour = COLOURS["orange"]
+                else:
+                    colour = COLOURS["black"]
+                self.draw_wire(win, self.output_rects()[i].center, other_node.input_rects()[other_index].center, colour)
+        
         for i, rect in enumerate(self.output_rects()):
             if i == self.selected:
                 pygame.draw.rect(win, COLOURS["green"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
@@ -66,12 +77,7 @@ class Node(Movable):
                 pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
         
         # draw lines from input rects to output rects
-        for i, output in enumerate(self.outputs):
-            for this_index, (other) in enumerate(output):
-                if other is None:
-                    continue
-                other_node, other_index = other
-                self.draw_wire(win, self.output_rects()[i].center, other_node.input_rects()[other_index].center)
+        
     
     def draw_input_rects(self, win):
         for rect in self.input_rects():
@@ -80,19 +86,22 @@ class Node(Movable):
     def draw(self, win):
         if (self.name == "bulb" and self.output_values[-1]) or (self.name == "switch" and self.output_values[0]):
             colour = COLOURS["cyan"]
+            text_colour = COLOURS["red"]
         else:
             colour = COLOURS["black"]
+            text_colour = COLOURS["white"]
+        
         pygame.draw.rect(win, colour, self.rect, border_radius=3)
-        text = NODE_FONT.render(self.name, 1, COLOURS["white"])
+        text = NODE_FONT.render(self.name, 1, text_colour)
         win.blit(text, (self.x + self.width / 2 - text.get_width() / 2, self.y + self.height / 2 - text.get_height() / 2))
-        self.draw_output_rects(win)
         self.draw_input_rects(win)
+        self.draw_output_rects(win)
     
-    def draw_wire(self, win, point_1, point_2):
+    def draw_wire(self, win, point_1, point_2, colour):
         diff_x = point_2[0] - point_1[0]
         mid_1 = (point_1[0] + diff_x / 2, point_1[1])
         mid_2 = (point_1[0] + diff_x / 2, point_2[1])
-        pygame.draw.lines(win, COLOURS["black"], False, [point_1, mid_1, mid_2, point_2])
+        pygame.draw.lines(win, colour, False, [point_1, mid_1, mid_2, point_2])
     
     def output_node_selected(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
