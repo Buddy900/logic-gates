@@ -80,15 +80,10 @@ class Screen:
                         self.selected_node = None
                     break
         elif event.button == 3:
-            for i in self.nodes:
+            for i in reversed(self.nodes):
                 if i.clicked():
                     i.remove()
                     self.nodes.remove(i)
-                    break
-        elif event.button == 2:
-            for i in self.nodes:
-                if i.clicked():
-                    i.updated_value()
                     break
     
     def handle_mouse_up(self, event):
