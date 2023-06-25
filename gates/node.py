@@ -157,7 +157,7 @@ class Node(Movable):
                 return True
         return False
 
-    def updated_value(self):
+    def update_value(self):
         gates = {str(i): self.get_input_value(i) for i in range(self.num_inputs)}
         for gate, data in self.structure["gates"].items():
             if data == "on_click":
@@ -179,4 +179,4 @@ class Node(Movable):
     
     def update(self):
         super().update()
-        self.updated_value()
+        self.update_value()
