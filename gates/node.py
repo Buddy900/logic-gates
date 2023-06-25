@@ -165,13 +165,21 @@ class Node(Movable):
             elif len(data) == 1:
                 gates[gate] = self.gate(data[0])
             elif len(data) == 2:
-                gates[gate] = self.gate(data[0], gates[data[1]])
+                if data[1][0] == "o":
+                    info = self.output_values[int(data[1][1:])]
+                else:
+                    info = gates.get(data[1], False)
+                gates[gate] = self.gate(data[0], info)
             else:
-                gates[gate] = self.gate(data[0], *[gates[data[i]] for i in range(1, len(data))])
+                args = [gates.get(data[i], False) if data[i][0] != "o" else self.output_values[int(data[i][1:])] for i in range(1, len(data))]
+                gates[gate] = self.gate(data[0], *args)
         
         for output, data in self.structure["outputs"].items():
             self.output_values[int(output)] = gates[data]
-    
+        
+        if self.name == "clock":
+            print(f"{gates=}")
+
     def update(self):
         super().update()
         self.updated_value()

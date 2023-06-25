@@ -50,6 +50,10 @@ class Screen:
             self.nodes.append(Node("half_adder", 50, 50, 50, 50))
         elif event.key == pygame.K_2:
             self.nodes.append(Node("full_adder", 50, 50, 50, 50))
+        elif event.key == pygame.K_c:
+            self.nodes.append(Node("clock", 50, 50, 50, 50))
+        elif event.key == pygame.K_SPACE:
+            self.nodes.append(Node("test", 50, 50, 50, 50))
     
     def handle_key_up(self, event):
         pass

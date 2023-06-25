@@ -4,10 +4,10 @@
     "num_outputs": 1,
     "structure": {
         "gates": {
-            "3": ["xnor", "0", "1"]
+            "2": ["xnor", "0", "1"]
         },
         "outputs": {
-            "0": "3"
+            "0": "2"
         }
     }
 }

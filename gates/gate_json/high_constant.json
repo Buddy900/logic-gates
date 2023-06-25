@@ -4,10 +4,10 @@
     "num_outputs": 1,
     "structure": {
         "gates": {
-            "2": ["true"]
+            "0": ["true"]
         },
         "outputs": {
-            "0": "2"
+            "0": "0"
         }
     }
 }
