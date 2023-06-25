@@ -1,0 +1,18 @@
+{
+    "name": "example",
+    "num_inputs": 3,
+    "num_outputs": 1,
+    "structure": {
+        "gates": {
+            "3": "on_click",
+            "4": ["and", "0", "3"],
+            "5": ["xor", "1", "2"],
+            "6": ["and", "4", "5"],
+            "7": ["not", "6"]
+        },
+        "outputs": {
+            "0": "6",
+            "light": "3"
+        }
+    }
+}

@@ -1,0 +1,56 @@
+---------- How to make a gate with json ----------
+Example structure:
+{
+    "name": "example",
+    "num_inputs": 3,
+    "num_outputs": 1,
+    "structure": {
+        "gates": {
+            "3": "on_click",
+            "4": ["and", "0", "3"],
+            "5": ["xor", "1", "2"],
+            "6": ["and", "4", "5"],
+            "7": ["not", "6"]
+        },
+        "outputs": {
+            "0": "6",
+            "light": "3"
+        }
+    }
+}
+
+##################################################
+File name:
+The name of the file is important - this is what is used when creating a node.
+
+"name":
+This is the text that will (usually) be displayed on the node.
+
+"num_inputs":
+The number of inputs. These also count as gates (more on that later) and start at 0.
+
+"num_outputs":
+The number of outputs. DOES NOT include special outputs.
+
+##################################################
+STRUCTURE
+"gates":
+Each gate has a number (shown in _example.png). The inputs also have numbers. There are a few ways to create a new gate:
+- "n": "on_click" -> This gate alternates between true and false when clicked.
+- "n": ["true"] -> This gate can be set to true or false permanently.
+- "n": ["gate_name", "x", "y", "z"...] -> This gate takes a name of a gate (list below) and a number of other gates to operate on.
+List of gates:
+- "not" -> returns the opposite of the value of the first input
+- "and" -> returns true if all of the inputs are true, otherwise false
+- "nand" -> returns false if all of the inputs are true, otherwise true
+- "or" -> returns true if at least one of the inputs are true, otherwise false
+- "nor" -> returns true if none of the inputs are true, otherwise false
+- "xor" -> returns true if the first two inputs are different, otherwise false
+- "xnor" -> returns true if the first two inputs are the same, otherwise false
+- "hexadecimal" -> returns a string of the hexadecimal value of the inputs. e.g. inputs 1, 0, 0, 1, 0, 1, 0, 0 return 94. Should only be used with "text" output.
+
+"outputs":
+One output is required for each specified in "num_outputs". Outputs start counting at 0.
+There are also some special outputs which DO NOT count towards "num_outputs" and are not necessary for most gates:
+- "light" -> determines when/if the node lights up (like a bulb)
+- "text" -> changes the text on the front of the node. e.g. 4_bit_number.json

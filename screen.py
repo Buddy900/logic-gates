@@ -59,6 +59,8 @@ class Screen:
                 self.nodes.append(Node("clock", 50, 50, 50, 50))
             case pygame.K_h:
                 self.nodes.append(Node("4_bit_number", 50, 50, 50, 50))
+            case pygame.K_RCTRL:
+                self.nodes.append(Node("_example", 50, 50, 50, 50))
     
     def handle_key_up(self, event):
         pass
