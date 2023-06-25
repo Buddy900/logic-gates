@@ -72,20 +72,17 @@ class Node(Movable):
         for i, rect in enumerate(self.output_rects()):
             if i == self.selected:
                 pygame.draw.rect(win, COLOURS["green"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
-            elif self.output_values[i] and not self.name in ["bulb", "switch"]:
+            elif self.output_values[i] and not self.light:
                 pygame.draw.rect(win, COLOURS["cyan"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
             else:
                 pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_right_radius=2, border_top_right_radius=2)
-        
-        # draw lines from input rects to output rects
-        
     
     def draw_input_rects(self, win):
         for rect in self.input_rects():
             pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_left_radius=2, border_top_left_radius=2)
     
     def draw(self, win):
-        if (self.name == "bulb" and self.output_values[-1]) or (self.name == "switch" and self.output_values[0]):
+        if self.light:
             colour = COLOURS["cyan"]
             text_colour = COLOURS["red"]
         else:
@@ -128,6 +125,7 @@ class Node(Movable):
             self.outputs = [[] for _ in range(self.num_outputs)]
             self.structure = data["structure"]
             self.output_values = {i: False for i in range(self.num_outputs)}
+            self.light = False
             self.clickable = False
             self.on = False
 
@@ -179,7 +177,9 @@ class Node(Movable):
         
         for output, data in self.structure["outputs"].items():
             if output == "text":
-                self.text = gates[data]
+                self.text = str(gates[data])
+            elif output == "light":
+                self.light = gates[data]
             else:
                 self.output_values[int(output)] = gates[data]
     
