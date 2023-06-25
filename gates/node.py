@@ -165,12 +165,6 @@ class Node(Movable):
                 gates[gate] = self.on
             elif len(data) == 1:
                 gates[gate] = self.gate(data[0])
-            elif len(data) == 2:
-                if data[1][0] == "o":
-                    info = self.output_values[int(data[1][1:])]
-                else:
-                    info = gates.get(data[1], False)
-                gates[gate] = self.gate(data[0], info)
             else:
                 args = [gates.get(data[i], False) if data[i][0] != "o" else self.output_values[int(data[i][1:])] for i in range(1, len(data))]
                 gates[gate] = self.gate(data[0], *args)
