@@ -1,6 +1,5 @@
 {
     "name": "switch",
-    "light": true,
     "num_inputs": 0,
     "num_outputs": 1,
     "structure": {
