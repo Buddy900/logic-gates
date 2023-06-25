@@ -11,6 +11,7 @@ class Node(Movable):
         self.load_json()
         super().__init__(x, y, width, height)
         self.selected = None
+        self.text = self.name
     
     def attach(self, other_node, output_index, input_index):
         other_node.inputs[input_index].append((self, output_index))
@@ -92,7 +93,7 @@ class Node(Movable):
             text_colour = COLOURS["white"]
         
         pygame.draw.rect(win, colour, self.rect, border_radius=3)
-        text = NODE_FONT.render(self.name, 1, text_colour)
+        text = NODE_FONT.render(self.text, 1, text_colour)
         win.blit(text, (self.x + self.width / 2 - text.get_width() / 2, self.y + self.height / 2 - text.get_height() / 2))
         self.draw_input_rects(win)
         self.draw_output_rects(win)
@@ -149,6 +150,8 @@ class Node(Movable):
             return False
         elif name == "true":
             return True
+        elif name == "hexadecimal":
+            return str(hex(int("".join([str(int(i)) for i in args]), 2)))[2:]
     
     def get_input_value(self, input_index):
         for node, index in self.inputs[input_index]:
@@ -175,8 +178,11 @@ class Node(Movable):
                 gates[gate] = self.gate(data[0], *args)
         
         for output, data in self.structure["outputs"].items():
-            self.output_values[int(output)] = gates[data]
-
+            if output == "text":
+                self.text = gates[data]
+            else:
+                self.output_values[int(output)] = gates[data]
+    
     def update(self):
         super().update()
         self.updated_value()

@@ -1,0 +1,13 @@
+{
+    "name": "4_bit",
+    "num_inputs": 4,
+    "num_outputs": 0,
+    "structure": {
+        "gates": {
+            "4": ["hexadecimal", "0", "1", "2", "3"]
+        },
+        "outputs": {
+            "text": "4"
+        }
+    }
+}

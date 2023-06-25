@@ -30,9 +30,9 @@ class Screen:
             self.nodes.append(Node("and", 50, 50, 50, 50))
         elif event.key == pygame.K_o:
             self.nodes.append(Node("or", 50, 50, 50, 50))
-        elif event.key == pygame.K_h:
+        elif event.key == pygame.K_t:
             self.nodes.append(Node("high_constant", 50, 50, 50, 50))
-        elif event.key == pygame.K_l:
+        elif event.key == pygame.K_f:
             self.nodes.append(Node("low_constant", 50, 50, 50, 50))
         elif event.key == pygame.K_b:
             self.nodes.append(Node("bulb", 50, 50, 50, 50))
@@ -54,6 +54,8 @@ class Screen:
             self.nodes.append(Node("clock", 50, 50, 50, 50))
         elif event.key == pygame.K_SPACE:
             self.nodes.append(Node("test", 50, 50, 50, 50))
+        elif event.key == pygame.K_h:
+            self.nodes.append(Node("4_bit_number", 50, 50, 50, 50))
     
     def handle_key_up(self, event):
         pass
