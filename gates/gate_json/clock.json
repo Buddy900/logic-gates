@@ -1,0 +1,13 @@
+{
+    "name": "clock",
+    "num_inputs": 0,
+    "num_outputs": 1,
+    "structure": {
+        "gates": {
+            "1": ["not", "o0"]
+        },
+        "outputs": {
+            "0": "1"
+        }
+    }
+}
