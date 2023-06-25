@@ -24,38 +24,41 @@ class Screen:
         pygame.display.update()
     
     def handle_key_down(self, event):
-        if event.key == pygame.K_n:
-            self.nodes.append(Node("not", 50, 50, 50, 50))
-        elif event.key == pygame.K_a:
-            self.nodes.append(Node("and", 50, 50, 50, 50))
-        elif event.key == pygame.K_o:
-            self.nodes.append(Node("or", 50, 50, 50, 50))
-        elif event.key == pygame.K_t:
-            self.nodes.append(Node("high_constant", 50, 50, 50, 50))
-        elif event.key == pygame.K_f:
-            self.nodes.append(Node("low_constant", 50, 50, 50, 50))
-        elif event.key == pygame.K_b:
-            self.nodes.append(Node("bulb", 50, 50, 50, 50))
-        elif event.key == pygame.K_d:
-            self.nodes.append(Node("nand", 50, 50, 50, 50))
-        elif event.key == pygame.K_u:
-            self.nodes.append(Node("buffer", 50, 50, 50, 50))
-        elif event.key == pygame.K_x:
-            self.nodes.append(Node("xor", 50, 50, 50, 50))
-        elif event.key == pygame.K_s:
-            self.nodes.append(Node("switch", 50, 50, 50, 50))
-        elif event.key == pygame.K_RSHIFT:
-            self.nodes.append(Node("node", 50, 50, 50, 50))
-        elif event.key == pygame.K_1:
-            self.nodes.append(Node("half_adder", 50, 50, 50, 50))
-        elif event.key == pygame.K_2:
-            self.nodes.append(Node("full_adder", 50, 50, 50, 50))
-        elif event.key == pygame.K_c:
-            self.nodes.append(Node("clock", 50, 50, 50, 50))
-        elif event.key == pygame.K_SPACE:
-            self.nodes.append(Node("test", 50, 50, 50, 50))
-        elif event.key == pygame.K_h:
-            self.nodes.append(Node("4_bit_number", 50, 50, 50, 50))
+        match event.key:
+            case pygame.K_n:
+                self.nodes.append(Node("not", 50, 50, 50, 50))
+            case pygame.K_a:
+                self.nodes.append(Node("and", 50, 50, 50, 50))
+            case pygame.K_o:
+                self.nodes.append(Node("or", 50, 50, 50, 50))
+            case pygame.K_r:
+                self.nodes.append(Node("nor", 50, 50, 50, 50))
+            case pygame.K_z:
+                self.nodes.append(Node("xnor", 50, 50, 50, 50))
+            case pygame.K_t:
+                self.nodes.append(Node("high_constant", 50, 50, 50, 50))
+            case pygame.K_f:
+                self.nodes.append(Node("low_constant", 50, 50, 50, 50))
+            case pygame.K_b:
+                self.nodes.append(Node("bulb", 50, 50, 50, 50))
+            case pygame.K_d:
+                self.nodes.append(Node("nand", 50, 50, 50, 50))
+            case pygame.K_u:
+                self.nodes.append(Node("buffer", 50, 50, 50, 50))
+            case pygame.K_x:
+                self.nodes.append(Node("xor", 50, 50, 50, 50))
+            case pygame.K_s:
+                self.nodes.append(Node("switch", 50, 50, 50, 50))
+            case pygame.K_RSHIFT:
+                self.nodes.append(Node("node", 50, 50, 50, 50))
+            case pygame.K_1:
+                self.nodes.append(Node("half_adder", 50, 50, 50, 50))
+            case pygame.K_2:
+                self.nodes.append(Node("full_adder", 50, 50, 50, 50))
+            case pygame.K_c:
+                self.nodes.append(Node("clock", 50, 50, 50, 50))
+            case pygame.K_h:
+                self.nodes.append(Node("4_bit_number", 50, 50, 50, 50))
     
     def handle_key_up(self, event):
         pass
