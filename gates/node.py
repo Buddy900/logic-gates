@@ -176,9 +176,6 @@ class Node(Movable):
         
         for output, data in self.structure["outputs"].items():
             self.output_values[int(output)] = gates[data]
-        
-        if self.name == "clock":
-            print(f"{gates=}")
 
     def update(self):
         super().update()
