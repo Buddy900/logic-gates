@@ -108,10 +108,13 @@ class Node(Movable):
         self.draw_output_rects(win)
     
     def draw_wire(self, win, point_1, point_2, colour):
-        diff_x = point_2[0] - point_1[0]
-        mid_1 = (point_1[0] + diff_x / 2, point_1[1])
-        mid_2 = (point_1[0] + diff_x / 2, point_2[1])
-        pygame.draw.lines(win, colour, False, [point_1, mid_1, mid_2, point_2])
+        start_x, start_y  = point_1[0] + 20, point_1[1]
+        end_x, end_y = point_2[0] - 20, point_2[1]
+        diff_x = end_x - start_x
+        diff_y = end_y - start_y
+        mid_1 = (start_x, start_y + diff_y / 2)
+        mid_2 = (end_x, start_y + diff_y / 2)
+        pygame.draw.lines(win, colour, False, [point_1, (start_x, start_y), mid_1, mid_2, (end_x, end_y), point_2])
     
     def output_node_selected(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
