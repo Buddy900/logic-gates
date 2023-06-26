@@ -1,6 +1,8 @@
 from consts import *
 from gates import Node
 
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
 

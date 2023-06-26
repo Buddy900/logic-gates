@@ -1,6 +1,8 @@
 from consts import *
 from .movable import Movable
 
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 import json
 
@@ -9,6 +11,16 @@ class Node(Movable):
     def __init__(self, name, x, y, width, height):
         self.file_name = f"{name}.json"
         self.load_json()
+        self.name = self.data["name"]
+        self.num_inputs = self.data["num_inputs"]
+        self.inputs = [[] for _ in range(self.num_inputs)]
+        self.num_outputs = self.data["num_outputs"]
+        self.outputs = [[] for _ in range(self.num_outputs)]
+        self.structure = self.data["structure"]
+        self.output_values = {i: False for i in range(self.num_outputs)}
+        self.light = False
+        self.clickable = False
+        self.on = False
         super().__init__(x, y, width, height)
         self.selected = None
         self.text = self.name
@@ -116,18 +128,8 @@ class Node(Movable):
         return -1
     
     def load_json(self):
-        with open(f"gates\\gate_json\\{self.file_name}", "r") as file:
-            data = json.load(file)
-            self.name = data["name"]
-            self.num_inputs = data["num_inputs"]
-            self.inputs = [[] for _ in range(self.num_inputs)]
-            self.num_outputs = data["num_outputs"]
-            self.outputs = [[] for _ in range(self.num_outputs)]
-            self.structure = data["structure"]
-            self.output_values = {i: False for i in range(self.num_outputs)}
-            self.light = False
-            self.clickable = False
-            self.on = False
+        with open(os.path.join("gates", "gate_json", self.file_name)) as file:
+            self.data = json.load(file)
 
     def gate(self, name, *args):
         if name == "and":
