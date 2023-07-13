@@ -4,7 +4,7 @@ import pygame
 pygame.font.init()
 
 
-WIDTH, HEIGHT = 800, 800
+WIDTH, HEIGHT = 1200, 800
 
 FPS = 60
 

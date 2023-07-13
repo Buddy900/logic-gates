@@ -24,6 +24,12 @@ class Node(Movable):
         super().__init__(x, y, width, height)
         self.selected = None
         self.text = self.name
+        
+        self.draw_x, self.draw_y = self.x, self.y
+    
+    @property
+    def rect(self):
+        return pygame.Rect(self.draw_x, self.draw_y, self.width, self.height)
     
     def attach(self, other_node, output_index, input_index):
         other_node.inputs[input_index].append((self, output_index))
@@ -52,8 +58,8 @@ class Node(Movable):
     def output_rects(self):
         rects = []
         for i, other in enumerate(self.outputs):
-            x = self.x + self.width
-            y = self.y + self.height / len(self.outputs) * i + (self.height / len(self.outputs) - self.height / (len(self.outputs) + 1)) / 2
+            x = self.draw_x + self.width
+            y = self.draw_y + self.height / len(self.outputs) * i + (self.height / len(self.outputs) - self.height / (len(self.outputs) + 1)) / 2
             width = 10
             height = self.height / (len(self.outputs) + 1)
             rects.append(pygame.Rect(x, y, width, height))
@@ -62,8 +68,8 @@ class Node(Movable):
     def input_rects(self):
         rects = []
         for i, other in enumerate(self.inputs):
-            x = self.x - 10
-            y = self.y + self.height / len(self.inputs) * i + (self.height / len(self.inputs) - self.height / (len(self.inputs) + 1)) / 2
+            x = self.draw_x - 10
+            y = self.draw_y + self.height / len(self.inputs) * i + (self.height / len(self.inputs) - self.height / (len(self.inputs) + 1)) / 2
             width = 10
             height = self.height / (len(self.inputs) + 1)
             rects.append(pygame.Rect(x, y, width, height))
@@ -93,7 +99,9 @@ class Node(Movable):
         for rect in self.input_rects():
             pygame.draw.rect(win, COLOURS["red"], rect, border_bottom_left_radius=2, border_top_left_radius=2)
     
-    def draw(self, win):
+    def draw(self, win, x_offset=0, y_offset=0):
+        self.draw_x = self.x + x_offset
+        self.draw_y = self.y + y_offset
         if self.light:
             colour = COLOURS["cyan"]
             text_colour = COLOURS["red"]
@@ -103,7 +111,7 @@ class Node(Movable):
         
         pygame.draw.rect(win, colour, self.rect, border_radius=3)
         text = NODE_FONT.render(self.text, 1, text_colour)
-        win.blit(text, (self.x + self.width / 2 - text.get_width() / 2, self.y + self.height / 2 - text.get_height() / 2))
+        win.blit(text, (self.draw_x + self.width / 2 - text.get_width() / 2, self.draw_y + self.height / 2 - text.get_height() / 2))
         self.draw_input_rects(win)
         self.draw_output_rects(win)
     
