@@ -38,7 +38,11 @@ class Screen:
     def handle_mouse_down(self, event):
         if pygame.mouse.get_pos()[0] >= self.sidebar_width:
             self.gate_area.handle_mouse_down(event)
+        else:
+            self.sidebar.handle_mouse_down(event)
     
     def handle_mouse_up(self, event):
         if pygame.mouse.get_pos()[0] >= self.sidebar_width:
             self.gate_area.handle_mouse_up(event)
+        else:
+            self.sidebar.handle_mouse_up(event)
