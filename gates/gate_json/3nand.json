@@ -1,0 +1,13 @@
+{
+    "name": "3nand",
+    "num_inputs": 3,
+    "num_outputs": 1,
+    "structure": {
+        "gates": {
+            "3": ["nand", "0", "1", "2"]
+        },
+        "outputs": {
+            "0": "3"
+        }
+    }
+}

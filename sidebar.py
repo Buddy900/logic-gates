@@ -11,7 +11,7 @@ class Sidebar:
     def __init__(self, width):
         self.width = width
         
-        self.scroll_list = ScrollList(["and", "or", "not", "nand", "xor", "nor", "xnor", "switch", "bulb", "buffer", "4_bit_number", "full_adder", "clock",
+        self.scroll_list = ScrollList(["switch", "bulb", "and", "or", "not", "nand", "xor", "nor", "xnor", "3and", "3nand", "buffer", "4_bit_number", "full_adder", "clock",
                                        "_example", "_example", "_example"],
                                       (15, 15), (self.width - 30, HEIGHT - 30))
         
