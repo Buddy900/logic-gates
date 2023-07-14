@@ -8,7 +8,7 @@ import json
 
 
 class Node(Movable):
-    def __init__(self, name, x, y, width, height):
+    def __init__(self, name, x, y, width, height, delete_x=0):
         self.file_name = f"{name}.json"
         self.load_json()
         self.name = self.data["name"]
@@ -24,6 +24,8 @@ class Node(Movable):
         super().__init__(x, y, width, height)
         self.selected = None
         self.text = self.name
+        
+        self.delete_x = delete_x    # when the x pos is less than this the node will be deleted
         
         self.draw_x, self.draw_y = self.x, self.y
     
@@ -193,3 +195,4 @@ class Node(Movable):
     def update(self):
         super().update()
         self.update_value()
+        return self.x < self.delete_x and not self.moving

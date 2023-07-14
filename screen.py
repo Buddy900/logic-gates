@@ -20,7 +20,10 @@ class Screen:
     def update(self):
         self.sidebar.update()
         self.gate_area.update()
-    
+        if self.sidebar.create_new_node:
+            new_node = self.sidebar.get_new_node()
+            self.gate_area.nodes.append(new_node)
+            
     def draw(self):
         self.win.fill(COLOURS["white"])
         
@@ -42,7 +45,5 @@ class Screen:
             self.sidebar.handle_mouse_down(event)
     
     def handle_mouse_up(self, event):
-        if pygame.mouse.get_pos()[0] >= self.sidebar_width:
-            self.gate_area.handle_mouse_up(event)
-        else:
-            self.sidebar.handle_mouse_up(event)
+        self.gate_area.handle_mouse_up(event)
+        self.sidebar.handle_mouse_up(event)
