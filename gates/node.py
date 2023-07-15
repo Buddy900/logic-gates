@@ -152,13 +152,13 @@ class Node(Movable):
         elif name == "not":
             return not args[0]
         elif name == "xor":
-            return args[0] != args[1]
+            return args.count(True) % 2 == 1
         elif name == "nand":
             return not all(args)
         elif name == "nor":
             return not any(args)
         elif name == "xnor":
-            return args[0] == args[1]
+            return args.count(True) % 2 == 0
         elif name == "false":
             return False
         elif name == "true":

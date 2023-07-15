@@ -45,8 +45,8 @@ List of gates:
 - "nand" -> returns false if all of the inputs are true, otherwise true
 - "or" -> returns true if at least one of the inputs are true, otherwise false
 - "nor" -> returns true if none of the inputs are true, otherwise false
-- "xor" -> returns true if the first two inputs are different, otherwise false
-- "xnor" -> returns true if the first two inputs are the same, otherwise false
+- "xor" -> returns true if the first an odd number of inputs are true, otherwise false
+- "xnor" -> returns true if the first an odd number of inputs are false, otherwise false
 - "hexadecimal" -> returns a string of the hexadecimal value of the inputs. e.g. inputs 1, 0, 0, 1, 0, 1, 0, 0 return 94. Should only be used with "text" output.
 
 "outputs":
